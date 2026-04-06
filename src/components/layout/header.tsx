@@ -19,7 +19,7 @@ export function Header() {
           </div>
           <div className="flex items-center gap-2.5">
             <span className="text-[14px] font-semibold tracking-tight text-text dark:text-text-dark">
-              ITRACKER
+              NEXUS
             </span>
             <span className="hidden text-[13px] text-text-secondary sm:block">
               Consulta Operacional

@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <LoadingScreen />
 
-      <div className="earlybird-bg flex min-h-screen flex-col overflow-hidden">
+      <div className="earlybird-bg flex h-[100dvh] flex-col overflow-hidden">
         {/* Animated floating orbs */}
         <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
           <div className="bg-orb bg-orb-1" />
@@ -19,18 +19,18 @@ export default function Home() {
         {/* Firefly particles */}
         <Fireflies />
 
-        <div className="relative z-10 flex min-h-screen flex-col">
+        <div className="relative z-10 flex h-full flex-col">
           {/* Theme toggle — top right */}
-          <div className="fixed right-5 top-5 z-50">
+          <div className="fixed right-4 top-4 z-50 sm:right-5 sm:top-5">
             <ThemeToggle />
           </div>
 
-          <main className="flex-1">
+          <main className="flex flex-1 flex-col">
             <ConsultaView />
           </main>
-          <footer className="py-8">
-            <p className="text-center text-[12px] text-[#999]">
-              ITRACKER &middot; Sistema interno &middot; Uso exclusivo operacional
+          <footer className="py-3 sm:py-4">
+            <p className="text-center text-[11px] text-[#999] sm:text-[12px]">
+              NEXUS &middot; Sistema interno &middot; Uso exclusivo operacional
             </p>
           </footer>
         </div>

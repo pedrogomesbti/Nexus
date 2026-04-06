@@ -7,10 +7,12 @@ import { useTheme } from "next-themes";
 export function LoadingScreen() {
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
   useEffect(() => {
+    setMounted(true);
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -31,14 +33,15 @@ export function LoadingScreen() {
     };
   }, []);
 
-  const colContainer = isDark ? "#60a5fa" : "#3b82f6";
-  const colCabin = isDark ? "#fb923c" : "#f97316";
-  const colWheel = isDark ? "#999" : "#333";
-  const colHub = isDark ? "#ccc" : "#666";
-  const colSmoke = isDark ? "#444" : "#ccc";
-  const colLine = isDark ? "#93bbf5" : "#2563eb";
-  const colWin = isDark ? "#6ab4ff" : "#1d4ed8";
-  const colText = isDark ? "#e8e8e8" : "#1a1a1a";
+  // Use light colors during SSR to match server, then switch to theme colors after mount
+  const colContainer = mounted && isDark ? "#60a5fa" : "#3b82f6";
+  const colCabin = mounted && isDark ? "#fb923c" : "#f97316";
+  const colWheel = mounted && isDark ? "#999" : "#333";
+  const colHub = mounted && isDark ? "#ccc" : "#666";
+  const colSmoke = mounted && isDark ? "#444" : "#ccc";
+  const colLine = mounted && isDark ? "#93bbf5" : "#2563eb";
+  const colWin = mounted && isDark ? "#6ab4ff" : "#1d4ed8";
+  const colText = mounted && isDark ? "#e8e8e8" : "#1a1a1a";
 
   return (
     <AnimatePresence>
@@ -142,7 +145,7 @@ export function LoadingScreen() {
                   transition={{ duration: 2, repeat: Infinity, delay: 1, ease: "easeOut" }}
                 />
                 <motion.circle
-                  cx="8" cy="65" r="2" fill={isDark ? "#555" : "#ddd"}
+                  cx="8" cy="65" r="2" fill={mounted && isDark ? "#555" : "#ddd"}
                   initial={{ opacity: 0, x: 0, scale: 0.5 }}
                   animate={{
                     opacity: [0, 0.4, 0.2, 0],
@@ -171,7 +174,7 @@ export function LoadingScreen() {
               className="flex flex-col items-center gap-3"
             >
               <h2 className="font-heading text-[22px] font-semibold tracking-wide" style={{ color: colText }}>
-                ITRACKER
+                NEXUS
               </h2>
               <p className="text-[13px] text-[#999]">
                 Carregando seu container...
@@ -184,11 +187,11 @@ export function LoadingScreen() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
               className="w-48 overflow-hidden rounded-full"
-              style={{ height: 3, background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)" }}
+              style={{ height: 3, background: mounted && isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)" }}
             >
               <motion.div
                 className="h-full rounded-full"
-                style={{ background: isDark ? "#60a5fa" : "#3b82f6" }}
+                style={{ background: mounted && isDark ? "#60a5fa" : "#3b82f6" }}
                 initial={{ width: "0%" }}
                 animate={{ width: `${Math.min(progress, 100)}%` }}
                 transition={{ duration: 0.2, ease: "easeOut" }}

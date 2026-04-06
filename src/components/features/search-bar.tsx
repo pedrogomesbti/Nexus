@@ -56,7 +56,7 @@ export function SearchBar({
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Nome, CNPJ/CPF ou código..."
+          placeholder={selectedType === "cliente" ? "Nome, CPF/CNPJ ou código do cliente..." : "Nome, CNPJ ou código do fornecedor..."}
           className="h-10 flex-1 bg-transparent text-[15px] placeholder:text-[#bbb] focus:outline-none dark:placeholder:text-[#555]"
           style={{ color: "var(--heading-color)" }}
           aria-label="Campo de pesquisa"

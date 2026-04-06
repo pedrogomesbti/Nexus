@@ -1,6 +1,6 @@
-# ITRACKER Nexus — Consulta Operacional
+# NEXUS — Consulta Operacional
 
-Sistema interno de consulta rápida de **clientes** e **fornecedores** para o operacional ITRACKER.
+Sistema interno de consulta rápida de **clientes** e **fornecedores** para o operacional NEXUS.
 
 ## Problema que resolve
 
@@ -145,7 +145,7 @@ Cada linha entra com animação staggered (delay progressivo).
   - Fumaça do escapamento em loop
   - Estrada animada
 - Barra de progresso com enchimento gradual
-- Texto "ITRACKER" com fonte Playfair Display
+- Texto "NEXUS" com fonte Playfair Display
 - Fade-out suave ao finalizar
 - Cores adaptam para dark mode
 

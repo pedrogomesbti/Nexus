@@ -9,14 +9,28 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ITRACKER — Consulta Operacional",
+  title: "NEXUS — Consulta Operacional",
   description:
-    "Sistema interno de consulta rápida de clientes e fornecedores — ITRACKER",
-  icons: {
-    icon: "/iTracker_ID_logo_COR N V P.png",
-    shortcut: "/iTracker_ID_logo_COR N V P.png",
-    apple: "/iTracker_ID_logo_COR N V P.png",
-  },
+    "Sistema interno de consulta rápida de clientes e fornecedores — NEXUS",
+  icons: [
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "32x32",
+      url: "/iTracker_ID_logo_COR N V P.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "16x16",
+      url: "/iTracker_ID_logo_COR N V P.png",
+    },
+    {
+      rel: "apple-touch-icon",
+      sizes: "180x180",
+      url: "/iTracker_ID_logo_COR N V P.png",
+    },
+  ],
 };
 
 export default function RootLayout({

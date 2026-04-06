@@ -8,7 +8,7 @@ import { Person, PersonType } from "@/types";
  * mantendo a mesma interface pública.
  */
 
-const SIMULATED_DELAY_MS = 800;
+const SIMULATED_DELAY_MS = 3000;
 
 function simulateDelay(): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, SIMULATED_DELAY_MS));
@@ -26,6 +26,20 @@ function cleanDigits(value: string): string {
   return value.replace(/\D/g, "");
 }
 
+function matchesPerson(person: Person, normalizedQuery: string, digitsOnly: string): boolean {
+  const matchesName = normalize(person.nome).includes(normalizedQuery);
+  const matchesCodPessoa = digitsOnly
+    ? person.codPessoa.includes(digitsOnly)
+    : false;
+  const matchesCnpjCpf = digitsOnly
+    ? person.cnpjCpf.includes(digitsOnly)
+    : false;
+  const matchesIdIntegracao = normalize(person.idIntegracao).includes(normalizedQuery);
+
+  return matchesName || matchesCodPessoa || matchesCnpjCpf || matchesIdIntegracao;
+}
+
+/** Busca filtrada por tipo */
 export async function fetchPersons(
   query: string,
   type: PersonType
@@ -40,18 +54,38 @@ export async function fetchPersons(
 
   return mockData.filter((person) => {
     if (person.tipo !== type) return false;
-
-    const matchesName = normalize(person.nome).includes(normalizedQuery);
-    const matchesCodPessoa = person.codPessoa.includes(
-      digitsOnly || normalizedQuery
-    );
-    const matchesCnpjCpf = person.cnpjCpf.includes(
-      digitsOnly || normalizedQuery
-    );
-    const matchesIdIntegracao = normalize(person.idIntegracao).includes(
-      normalizedQuery
-    );
-
-    return matchesName || matchesCodPessoa || matchesCnpjCpf || matchesIdIntegracao;
+    return matchesPerson(person, normalizedQuery, digitsOnly);
   });
+}
+
+/** Resultado da busca em ambos os tipos */
+export interface SearchAllResult {
+  clientes: Person[];
+  fornecedores: Person[];
+}
+
+/** Busca em AMBOS os tipos simultaneamente */
+export async function fetchAllPersons(query: string): Promise<SearchAllResult> {
+  await simulateDelay();
+
+  const trimmedQuery = query.trim();
+  if (!trimmedQuery) return { clientes: [], fornecedores: [] };
+
+  const normalizedQuery = normalize(trimmedQuery);
+  const digitsOnly = cleanDigits(trimmedQuery);
+
+  const clientes: Person[] = [];
+  const fornecedores: Person[] = [];
+
+  for (const person of mockData) {
+    if (matchesPerson(person, normalizedQuery, digitsOnly)) {
+      if (person.tipo === "cliente") {
+        clientes.push(person);
+      } else {
+        fornecedores.push(person);
+      }
+    }
+  }
+
+  return { clientes, fornecedores };
 }
